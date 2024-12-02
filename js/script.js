@@ -44,7 +44,7 @@ function loadCarModels(brand) {
 
             // Create an image for each model
             const modelImg = document.createElement('img');
-            modelImg.src = `images/${model.toLowerCase().replace(/ /g, '-')}.png`;  // Assuming model images are named like '488-spider.jpg'
+            modelImg.src = `images/${model.replace(/ /g, '-')}.png`;  // Assuming model images are named like '488-spider.jpg'
             modelImg.alt = model;
             modelImg.classList.add('model-img'); // Add a class for styling
 
