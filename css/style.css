@@ -1,244 +1,146 @@
-/* General Styles */
 body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(to right, #1a1a1a, #e30613);
-    color: white;
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    overflow-x: hidden;
-}
-
-header {
-    background: #000;
-    padding: 1rem 2rem;
+    background-color: #f9f9f9;
+    color: #333;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    height: 100vh;
 }
 
-.logo {
-    font-size: 1.5rem;
-    color: #e30613;
-    text-decoration: none;
-}
-
-.nav-links {
-    list-style: none;
-    display: flex;
-    gap: 1.5rem;
-}
-
-.nav-links a {
-    text-decoration: none;
-    color: white;
-    font-size: 1rem;
-    transition: color 0.3s;
-}
-
-.nav-links a:hover {
-    color: #e30613;
-}
-
-/* Verification Page */
-.verification-page {
+.join-race-page {
     text-align: center;
+    background: white;
     padding: 2rem;
-    position: relative;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.carousel-container {
+h1 {
+    color: #e30613;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.calendar-navigation {
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-.carousel {
-    display: flex;
-    gap: 2rem;
-    transition: transform 0.5s ease;
-}
-
-.carousel img {
-    height: 250px;
-    /* Increased size */
-    width: auto;
-    cursor: pointer;
-    transition: transform 0.3s ease, border 0.3s ease;
-    border: 3px solid transparent;
-    border-radius: 8px;
-}
-
-.carousel img:hover {
-    transform: scale(1.1);
-}
-
-.arrow {
-    position: fixed;
-    /* Keeps arrows fixed relative to the viewport */
-    top: 50%;
-    /* Vertically centers the arrows */
-    transform: translateY(-50%);
-    /* Fine-tune to ensure exact centering */
-    background-color: rgba(0, 0, 0, 0.5);
-    /* Slight dark background */
-    color: white;
-    border: none;
-    padding: 10px;
-    font-size: 1.5rem;
-    cursor: pointer;
-    z-index: 10;
-    /* Makes sure arrows are above other elements */
-    border-radius: 50%;
-    /* Circular buttons */
-    transition: background-color 0.3s ease;
-    /* Smooth hover effect */
-}
-
-.arrow-left {
-    left: 10px;
-    /* Position the left arrow on the left side */
-}
-
-.arrow-right {
-    right: 10px;
-    /* Position the right arrow on the right side */
-}
-
-/* Hover Effect */
-.arrow:hover {
-    background-color: rgba(0, 0, 0, 0.7);
-    /* Darkens background on hover */
-}
-
-/* Models */
-.models {
-    display: flex;
-    justify-content: center;
     gap: 1rem;
-    margin: 1rem 0;
+    margin-bottom: 1rem;
 }
 
-/* Style for model images */
-.models div {
-    display: inline-block;
-    padding: 10px;
-    cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.models div:hover {
-    transform: scale(1.05);
-}
-
-.models div.selected {
-    border: 3px solid rgb(233, 231, 231);
-    /* Red border when selected */
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
-    /* Add a glow effect */
-    transform: scale(1.1);
-    /* Slightly enlarge the image for effect */
-}
-
-.models img {
-    width: 150px;
-    height: 100px;
-    border-radius: 5px;
-    transition: transform 0.3s ease;
-}
-
-.models img:hover {
-    transform: scale(1.05);
-    /* Add hover effect to images */
-}
-
-
-select {
-    padding: 0.5rem;
-    border-radius: 8px;
-    border: none;
-    outline: none;
-}
-
-button {
-    margin-top: 1.5rem;
-    padding: 0.7rem 1.5rem;
-    border: none;
+.calendar-navigation button {
+    padding: 0.5rem 1rem;
     background-color: #e30613;
     color: white;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-button:hover {
-    background: #b1040f;
-}
-
-/* Result Card */
-.result-card {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%) scale(0);
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    width: 300px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    z-index: 1000;
-    transition: transform 0.4s ease, opacity 0.4s ease;
-    opacity: 0;
-}
-
-.result-card.success {
-    border: 3px solid #28a745;
-}
-
-.result-card.failure {
-    border: 3px solid #dc3545;
-}
-
-.result-card.visible {
-    transform: translate(-50%, -50%) scale(1);
-    opacity: 1;
-}
-
-.result-card h2 {
-    margin: 0;
-    margin-bottom: 10px;
-    font-size: 24px;
-}
-
-.result-card p {
-    font-size: 16px;
-    color: #555;
-}
-
-.result-card button {
-    margin-top: 10px;
-    padding: 8px 15px;
     border: none;
     border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    font-size: 1rem;
+    transition: background-color 0.3s;
 }
 
-.result-card button:hover {
-    background-color: #0056b3;
+.calendar-navigation button:hover {
+    background-color: #b1040f;
 }
 
-/* Background overlay for popup */
-#overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    display: none;
+#current-month-year {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.calendar div {
+    padding: 1rem;
+    text-align: center;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #e0e0e0;
+}
+
+.calendar .available {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.calendar .unavailable {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.calendar .completed {
+    background-color: #e2e3e5;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+.calendar div:hover {
+    opacity: 0.8;
+}
+
+button#confirm-race-day {
+    padding: 0.5rem 1.5rem;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: inline-block;
+}
+
+button#confirm-race-day:hover {
+    background-color: #218838;
+}
+
+.availability-message {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+}
+
+
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

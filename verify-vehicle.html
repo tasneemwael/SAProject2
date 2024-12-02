@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicle Verification</title>
+    <link rel="stylesheet" href="css/verify.css">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="#" class="logo">SpeedChasers</a>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Racer</a></li>
+                <li><a href="#">Viewer</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="verification-page">
+            <h1>Verify Your Vehicle</h1>
+
+            <!-- Car Brands Carousel -->
+            <div class="carousel-container">
+                <h2>Choose Your Brand</h2>
+                <button class="arrow arrow-left">&#8592;</button>
+                <div class="carousel">
+                    <img src="images/ferrari-removebg-preview.png" alt="Ferrari">
+                    <img src="images/lam-removebg-preview.png" alt="Lamborghini">
+                    <img src="images/prche.png" alt="Porsche">
+                    <img src="images/mer-removebg-preview.png" alt="Mercedes">
+                    <img src="images/bug-removebg-preview.png" alt="Bugatti">
+                    <img src="images/tesla-removebg-preview.png" alt="Tesla">
+                    <img src="images/bwm-removebg-preview.png" alt="BMW">
+                </div>
+                <button class="arrow arrow-right">&#8594;</button>
+
+            </div>
+
+            <!-- Car Models -->
+            <div class="type-selection">
+                <h2>Choose Your Model</h2>
+                <div class="models"></div>
+            </div>
+
+            <!-- Manufacturing Year -->
+            <div class="year-selection">
+                <h2>Select Manufacturing Year</h2>
+                <select id="year-dropdown">
+                    <option value="" disabled selected>Select Year</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                </select>
+            </div>
+
+            <!-- Car Status -->
+            <div class="car-status">
+                <h2>Car Condition</h2>
+                <select id="status-dropdown">
+                    <option value="" disabled selected>Select Car Status</option>
+                    <option value="new">New Car</option>
+                    <option value="used">Accident History</option>
+                </select>
+            </div>
+
+            <!-- Submit Button -->
+            <button id="submit-btn">Submit for Verification</button>
+
+            <!-- Result Card -->
+            <div id="overlay"></div>
+
+            <div id="result-card" class="result-card hidden">
+                <h2 id="result-title"></h2>
+                <p id="result-message"></p>
+                <button onclick="closePopup()">Close</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="js/verify.js"></script>
+</body>
+
+</html>

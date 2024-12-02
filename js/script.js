@@ -1,121 +1,102 @@
 // Select elements
-const carousel = document.querySelector('.carousel');
-const prevArrow = document.querySelector('.arrow-left');
-const nextArrow = document.querySelector('.arrow-right');
-const modelsContainer = document.querySelector('.models');
-const yearDropdown = document.querySelector('#year-dropdown');
-const statusDropdown = document.querySelector('#status-dropdown');
-const submitBtn = document.querySelector('#submit-btn');
-const resultCard = document.querySelector('#result-card');
-const resultTitle = document.querySelector('#result-title');
-const resultMessage = document.querySelector('#result-message');
+let currentDate = new Date(); // Start with the current date
 
-// Car models for each brand
-const carModels = {
-    Ferrari: ['488 Spider', '812 Superfast', 'SF90 Stradale'],
-    Lamborghini: ['Aventador', 'Huracán', 'Urus'],
-    Porsche: ['911 Carrera', 'Panamera', 'Cayenne'],
-    Mercedes: ['AMG GT', 'S-Class', 'E-Class'],
-    Bugatti: ['Chiron', 'Divo', 'Veyron'],
-    Tesla: ['Model S', 'Model X', 'Cybertruck'],
-    BMW: ['M3', 'i8', 'X5'],
+// Sample data: race availability status
+const raceDays = {
+    "2024-12-10": "available",
+    "2024-12-11": "unavailable",
+    "2024-12-12": "completed",
+    "2024-12-13": "available",
 };
 
-let selectedBrand = '';
-let selectedModel = '';
-let selectedYear = '';
-let selectedStatus = '';
+// Generate the calendar for the selected month and year
+function generateCalendar(date = new Date()) {
+    const calendarContainer = document.getElementById("calendar");
+    calendarContainer.innerHTML = "";
 
-// Handle brand selection
-carousel.addEventListener('click', (e) => {
-    if (e.target.tagName === 'IMG') {
-        selectedBrand = e.target.alt;
-        loadCarModels(selectedBrand);
+    const month = date.getMonth(); // Current month
+    const year = date.getFullYear(); // Current year
+
+    // Update the displayed month and year
+    const currentMonthYear = document.getElementById("current-month-year");
+    currentMonthYear.textContent = `${date.toLocaleString('default', { month: 'long' })} ${year}`;
+
+    // Start from the first day of the month
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+
+    // Calculate the number of days in the month
+    const totalDays = lastDay.getDate();
+
+    // Add empty divs for alignment before the first day
+    const startingDay = firstDay.getDay();
+    for (let i = 0; i < startingDay; i++) {
+        const emptyDiv = document.createElement("div");
+        calendarContainer.appendChild(emptyDiv);
     }
-});
 
-// Load car models dynamically
-function loadCarModels(brand) {
-    modelsContainer.innerHTML = ''; // Clear previous models
-    const models = carModels[brand];
-    if (models) {
-        models.forEach((model) => {
-            const modelDiv = document.createElement('div');
+    // Loop through the days of the current month
+    for (let i = 1; i <= totalDays; i++) {
+        const dateStr = `${year}-${(month + 1).toString().padStart(2, '0')}-${i.toString().padStart(2, '0')}`;
+        const dayDiv = document.createElement("div");
+        dayDiv.textContent = i;
 
-            // Create an image for each model
-            const modelImg = document.createElement('img');
-            modelImg.src = `images/${model.replace(/ /g, '-')}.png`;  // Assuming model images are named like '488-spider.jpg'
-            modelImg.alt = model;
-            modelImg.classList.add('model-img'); // Add a class for styling
+        // Check if the day is available, unavailable, or completed
+        const status = raceDays[dateStr] || "available"; // Default to available if no status
+        dayDiv.classList.add(status);
 
-            modelDiv.appendChild(modelImg);
+        // Add event listener for the day selection
+        dayDiv.addEventListener("click", () => selectRaceDay(dateStr, status));
 
-            modelDiv.addEventListener('click', () => {
-                // Remove highlight from other models
-                const allModels = document.querySelectorAll('.models div');
-                allModels.forEach((m) => m.classList.remove('selected'));
-
-                // Highlight selected model with a red border
-                modelDiv.classList.add('selected');
-                selectedModel = model;
-            });
-
-            modelsContainer.appendChild(modelDiv);
-        });
+        calendarContainer.appendChild(dayDiv);
     }
 }
 
-// Handle form submission
-submitBtn.addEventListener('click', () => {
-    selectedYear = yearDropdown.value;
-    selectedStatus = statusDropdown.value;
-
-    if (selectedBrand && selectedModel && selectedYear && selectedStatus) {
-        if (selectedStatus === 'new') {
-            showResult(true);
-        } else {
-            showResult(false);
-        }
-    } else {
-        alert('Please complete all steps!');
-    }
+// Handle navigation to the previous month
+document.getElementById("prev-month").addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() - 1); // Go to the previous month
+    generateCalendar(currentDate);
 });
 
-// Show result
-function showResult(isSuccess) {
-    const overlay = document.getElementById('overlay');
-    resultCard.classList.remove('hidden', 'success', 'failure', 'visible');
+// Handle navigation to the next month
+document.getElementById("next-month").addEventListener("click", () => {
+    currentDate.setMonth(currentDate.getMonth() + 1); // Go to the next month
+    generateCalendar(currentDate);
+});
 
-    if (isSuccess) {
-        resultCard.classList.add('success');
-        resultTitle.textContent = 'Verification Successful!';
-        resultMessage.textContent = 'Your car is in perfect condition for the race!';
-    } else {
-        resultCard.classList.add('failure');
-        resultTitle.textContent = 'Verification Failed';
-        resultMessage.textContent = 'Sorry, your car does not meet the requirements.';
+// Handle day selection and availability check
+function selectRaceDay(dateStr, status) {
+    const confirmButton = document.getElementById("confirm-race-day");
+    const availabilityMessage = document.getElementById("availability-message");
+
+    if (status === "available") {
+        availabilityMessage.textContent = `Race is available on ${dateStr}. Confirm to join!`;
+        availabilityMessage.style.color = "green";
+        confirmButton.style.display = "inline-block"; // Show confirm button
+        confirmButton.onclick = () => confirmRaceDay(dateStr);
+    } else if (status === "unavailable") {
+        availabilityMessage.textContent = `No race available on ${dateStr}. Please choose another day.`;
+        availabilityMessage.style.color = "red";
+        confirmButton.style.display = "none"; // Hide confirm button
+    } else if (status === "completed") {
+        availabilityMessage.textContent = `Race on ${dateStr} has already been completed.`;
+        availabilityMessage.style.color = "gray";
+        confirmButton.style.display = "none"; // Hide confirm button
     }
-
-    overlay.style.display = 'block';
-    resultCard.classList.add('visible');
-}
-function closePopup() {
-    const overlay = document.getElementById('overlay');
-    resultCard.classList.remove('visible');
-    overlay.style.display = 'none';
 }
 
-// Add event listener for closing the popup
-document.getElementById('overlay').addEventListener('click', closePopup);
+// Confirm the race day and redirect to vehicle verification page
+function confirmRaceDay(dateStr) {
+    alert(`You have selected ${dateStr} for the race! Proceeding to vehicle verification.`);
+    window.location.href = "verify-vehicle.html";
+}
 
-let scrollAmount = 0; // Initial scroll amount
+// Initialize calendar when the page loads
+window.onload = () => generateCalendar(currentDate);
 
-prevArrow.addEventListener('click', () => {
-    scrollAmount -= 250; // Adjust this value for how much you want to scroll
-    carousel.style.transform = `translateX(${scrollAmount}px)`;
-});
 
-nextArrow.addEventListener('click', () => {
-    scrollAmount += 250; // Adjust this value for how much you want to scroll
-    carousel.style.transform = `translateX(${scrollAmount}px)`;
-});
+
+
+
+
+
